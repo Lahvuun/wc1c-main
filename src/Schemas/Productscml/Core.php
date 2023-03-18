@@ -3004,7 +3004,7 @@ class Core extends SchemaAbstract
 					{
 						if($price_type['name'] === $regular_price_name)
 						{
-							$regular_price_id = $price_type['guid'];
+							$regular_price_id = $price_type['id'];
 							break;
 						}
 					}
