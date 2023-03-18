@@ -881,6 +881,15 @@ class Admin
 			'css' => 'min-width: 370px;',
 		];
 
+		$fields['products_prices_wc_metadata'] =
+		[
+			'title' => __('Prices based on WooCommerce metadata', 'wc1c-main'),
+			'type' => 'text',
+			'description' => __('Specify the mappings of 1С prices to WooCommerce metadata. Set in pairs separated by colons, with the pairs themselves delimited by commas. For example: "Интернет Дроп:_drop_price,Интернет Опт:_wholesale_price"', 'wc1c-main'),
+			'default' => '',
+			'css' => 'min-width: 370px;',
+		];
+
 		return $fields;
 	}
 
