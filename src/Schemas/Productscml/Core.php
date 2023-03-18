@@ -3081,6 +3081,42 @@ class Core extends SchemaAbstract
 			$this->log()->debug(__('Prices processing is successful.', 'wc1c-main'), ['regular_value' => $regular_value, 'sale_value' => $sale_value]);
 		}
 
+		$mappings = $this->getOptions('products_prices_wc_metadata', '');
+		if($mappings !== '')
+		{
+			$price_types = $reader->offers_package->getPriceTypes();
+			$pairs = explode(',', $mappings);
+			foreach($pairs as $pair)
+			{
+				$pair_exploded = explode(':', $pair);
+				$a1c_name = $pair_exploded[0];
+				$wc_name = $pair_exploded[1];
+
+				$a1c_id = '';
+				foreach($price_types as $price_type)
+				{
+					if($price_type['name'] === $a1c_name)
+					{
+						$a1c_id = $price_type['id'];
+						break;
+					}
+				}
+
+				$value = '';
+				if('' !== $a1c_id && isset($prices[$a1c_id]))
+				{
+					$value = $prices[$a1c_id]['price'];
+					unset($prices[$a1c_id]);
+				}
+
+				if('' !== $value) {
+					$internal_product->update_meta_data($wc_name, $value);
+				}
+			}
+
+			$internal_product->save_meta_data();
+		}
+
 		return $internal_product;
 	}
 
